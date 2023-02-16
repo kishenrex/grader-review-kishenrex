@@ -8,7 +8,7 @@ set -e
 files=`find student-submission`
 for file in $files
 do
-    if [[ $file == student-submission/ListExamples.java ]]
+    if [[ $file == */ListExamples.java ]]
     then
         theFile=$file
     fi
