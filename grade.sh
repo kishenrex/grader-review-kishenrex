@@ -39,6 +39,29 @@ then
     echo `cat errorFile.txt`
     exit
 fi
+
+grep 'static List<String> filter(List<String> list, StringChecker sc)' ListExamples.java>method1.txt
+grep 'static List<String> merge' ListExamples.java>method2.txt
+
+METHOD_ONE=`wc -l method1.txt | cut -c1`
+METHOD_TWO=`wc -l method2.txt | cut -c1`
+
+if [[ $METHOD_ONE -eq 1 ]]
+then 
+    echo "the filter method has the correct signature"
+else
+    echo "your filter method has an issue with its arguments, potentially the order or naming"
+    exit
+fi
+
+if [[ $METHOD_TWO -eq 1 ]]
+then 
+    echo "the merge has the correct signature"
+else
+    echo "your merge method has an issue with its arguments, potentially the order or naming"
+    exit
+fi
+
 javac -cp $CPATH TestListExamples.java
 java -cp $CPATH org.junit.runner.JUnitCore TestListExamples 1>testsRun.txt
 if [[ $? != 0 ]]
